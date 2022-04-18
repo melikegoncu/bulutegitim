@@ -1,3 +1,4 @@
+import 'package:bulutegitim/screens/auth/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class Auth extends StatefulWidget {
@@ -10,8 +11,6 @@ class Auth extends StatefulWidget {
 class _AuthState extends State<Auth> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("auth"),
-    );
+    return const SignInScreen();
   }
 }

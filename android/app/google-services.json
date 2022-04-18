@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "192475888110",
+    "project_id": "bulutegitim-2f12a",
+    "storage_bucket": "bulutegitim-2f12a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192475888110:android:3bce6e295c41272f8bf6ff",
+        "android_client_info": {
+          "package_name": "com.example.bulutegitim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192475888110-rlf7084jele5vrj3tg9g0j6dhu7gvun4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfmAyBeqUeZp785pMlzMQWutUmavelo4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192475888110-rlf7084jele5vrj3tg9g0j6dhu7gvun4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

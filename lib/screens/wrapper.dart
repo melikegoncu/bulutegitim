@@ -1,4 +1,4 @@
-import 'package:bulutegitim/screens/home/home.dart';
+import 'package:bulutegitim/screens/auth/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class Wrapper extends StatelessWidget {
@@ -6,6 +6,12 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Home();
+    return MaterialApp(  
+      title: 'Login App',
+      theme: ThemeData(  
+        primarySwatch: Colors.blue
+      ),
+      home: const SignInScreen(),
+    );
   }
 }
