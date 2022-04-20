@@ -67,7 +67,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 auth.createUserWithEmailAndPassword(email: _email, password: _password).then((_){
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
                 });
-                
               },
             )
           ])
