@@ -8,6 +8,7 @@ Future signInAnon() async {
     User? user = result.user;
     return user;
   } catch (e) {
+    // ignore: avoid_print
     print(e.toString());
     return null;
   }

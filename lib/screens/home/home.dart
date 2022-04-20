@@ -15,16 +15,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("HomePage")),
-      body: Column(children: [
-        Padding(padding: const EdgeInsets.all(8.0),
-        child:FloatingActionButton(
-          child: const Text("SignOut"),
-          onPressed: () {auth.signOut();
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const Wrapper()));} ,
-          ),
-        )
-      ]),
+      appBar: AppBar(title: const Text("Bulut Eğitim"),
+      actions: <Widget>[
+    IconButton(
+      icon: const Icon(
+        Icons.logout,
+        color: Colors.white,
+      ),
+      onPressed: () {
+        auth.signOut();
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const Wrapper()));
+        // do something
+      },
+    )
+  ],
+      ),
+      body: Column(),
     );/*Container(
     decoration: const BoxDecoration(
         image: DecorationImage(
