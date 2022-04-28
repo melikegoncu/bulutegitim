@@ -19,9 +19,9 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold( resizeToAvoidBottomInset: false, 
       appBar: AppBar(title: const Text('Bulut Eğitim'),),
       body: Container(
-  width: double.infinity,
-  decoration: const BoxDecoration(
-    image: DecorationImage(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+      image: DecorationImage(
         image: AssetImage('assets/girissayfa.jpeg'),
         fit: BoxFit.fill),//boyutlandırmaya bakılacak
   ),
@@ -38,9 +38,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   setState(() {
                     _email = value.trim();
                   });
-                },
-              ),
-            ),
+                },),),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
@@ -50,10 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   setState(() {
                     _password = value.trim();
                   });
-                },
-              ),
-              
-            ),
+                },),),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children:[
@@ -66,16 +61,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
                     });
-                    
               }),
               FloatingActionButton( 
                 heroTag: "signup",
                 backgroundColor: Colors.amber,
                 child: const Text('Kaydol'),
                 onPressed: (){
-                  /*auth.createUserWithEmailAndPassword(email: _email, password: _password).then((_){
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
-                  });*/
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignupScreen()));
                 },
               )
