@@ -1,4 +1,5 @@
-import 'package:bulutegitim/screens/wrapper.dart';
+import 'package:bulutegitim/screens/auth/sign_in_mobile.dart';
+import 'package:bulutegitim/screens/home/home_web.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -12,7 +13,7 @@ void main() async {
           messagingSenderId: "192475888110",
           projectId: "bulutegitim-2f12a"));
   
-  runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: Wrapper()));
+  runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: HomeWebScreen()));
 }
 
  else {
@@ -23,6 +24,6 @@ void main() async {
           messagingSenderId: "192475888110",
           projectId: "bulutegitim-2f12a"));
   
-  runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: Wrapper()));
+  runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: SignInScreen()));
 }
 }

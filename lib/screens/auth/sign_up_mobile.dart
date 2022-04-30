@@ -1,27 +1,24 @@
-import 'package:bulutegitim/screens/auth/sign_up.dart';
-import 'package:bulutegitim/screens/home/home.dart';
+import 'package:bulutegitim/screens/home/home_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({ Key? key }) : super(key: key);
 
   @override
-  _SignInScreenState createState() => _SignInScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
-  late String _email, _password;
+class _SignupScreenState extends State<SignupScreen> {
+    late String _email, _password, _name;
   final auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold( resizeToAvoidBottomInset: false, 
       appBar: AppBar(title: const Text('Bulut Eğitim'),),
       body: Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(
-      image: DecorationImage(
+  width: double.infinity,
+  decoration: const BoxDecoration(
+    image: DecorationImage(
         image: AssetImage('assets/girissayfa.jpeg'),
         fit: BoxFit.fill),//boyutlandırmaya bakılacak
   ),
@@ -30,44 +27,60 @@ class _SignInScreenState extends State<SignInScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                
+                keyboardType: TextInputType.name,
+                decoration: const InputDecoration(  
+                  prefixIcon: Icon(Icons.person),
+
+                  hintText: 'Tam Ad'
+                ),
+                 onChanged: (value) {
+                  setState(() {
+                    _name = value.trim();
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(  
+                   prefixIcon: Icon(Icons.mail),
                   hintText: 'Email'
                 ),
                  onChanged: (value) {
                   setState(() {
                     _email = value.trim();
                   });
-                },),),
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 obscureText: true,
-                decoration: const InputDecoration(hintText: 'Şifre'),
+                decoration: const InputDecoration(hintText: 'Şifre', prefixIcon: Icon(Icons.lock)),
+                
                 onChanged: (value) {
                   setState(() {
                     _password = value.trim();
                   });
-                },),),
+                },
+              ),
+              
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children:[
-              FloatingActionButton(
-                heroTag: "login",
-                backgroundColor: Colors.amber,
-                child: const Text('Giriş Yap',
-                textAlign: TextAlign.center),
-                onPressed: (){
-                    auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
-                    });
-              }),
               FloatingActionButton( 
                 heroTag: "signup",
                 backgroundColor: Colors.amber,
                 child: const Text('Kaydol'),
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignupScreen()));
+                  auth.createUserWithEmailAndPassword(email: _email, password: _password).then((_){
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
+                  });
                 },
               )
             ])

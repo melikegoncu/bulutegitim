@@ -1,4 +1,4 @@
-import 'package:bulutegitim/screens/auth/sign_in.dart';
+import 'package:bulutegitim/screens/auth/sign_in_mobile.dart';
 import 'package:flutter/material.dart';
 
 class Auth extends StatefulWidget {
