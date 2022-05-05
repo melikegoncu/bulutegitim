@@ -12,6 +12,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   late String _email, _password;
+  final _formKey = GlobalKey<FormState>();
   final auth = FirebaseAuth.instance;
 
   @override
@@ -25,53 +26,56 @@ class _SignInScreenState extends State<SignInScreen> {
         image: AssetImage('assets/girissayfa.jpeg'),
         fit: BoxFit.fill),//boyutlandırmaya bakılacak
   ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(  
-                  hintText: 'Email'
-                ),
-                 onChanged: (value) {
-                  setState(() {
-                    _email = value.trim();
-                  });
-                },),),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                obscureText: true,
-                decoration: const InputDecoration(hintText: 'Şifre'),
-                onChanged: (value) {
-                  setState(() {
-                    _password = value.trim();
-                  });
-                },),),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children:[
-              FloatingActionButton(
-                heroTag: "login",
-                backgroundColor: Colors.amber,
-                child: const Text('Giriş Yap',
-                textAlign: TextAlign.center),
-                onPressed: (){
-                    auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(  
+                    hintText: 'Email'
+                  ),
+                   onChanged: (value) {
+                    setState(() {
+                      _email = value.trim();
                     });
-              }),
-              FloatingActionButton( 
-                heroTag: "signup",
-                backgroundColor: Colors.amber,
-                child: const Text('Kaydol'),
-                onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignupScreen()));
-                },
-              )
-            ])
-          ],),
+                  },),),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(hintText: 'Şifre'),
+                  onChanged: (value) {
+                    setState(() {
+                      _password = value.trim();
+                    });
+                  },),),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children:[
+                FloatingActionButton(
+                  heroTag: "login",
+                  backgroundColor: Colors.amber,
+                  child: const Text('Giriş Yap',
+                  textAlign: TextAlign.center),
+                  onPressed: (){
+                      auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
+                      });
+                }),
+                FloatingActionButton( 
+                  heroTag: "signup",
+                  backgroundColor: Colors.amber,
+                  child: const Text('Kaydol'),
+                  onPressed: (){
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignupScreen()));
+                  },
+                )
+              ])
+            ],),
+        ),
       ),
     );
   }
