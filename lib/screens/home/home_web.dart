@@ -1,3 +1,4 @@
+import 'package:bulutegitim/screens/pages/main_home_web.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -14,7 +15,7 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
     late String  _password, _email, _name;
   final auth = FirebaseAuth.instance;
 
-  String? _value= "Kategoriler";
+  String? _value= "Categories";
   @override
   Widget build(BuildContext context) {
   var screenSize = MediaQuery.of(context).size;
@@ -24,17 +25,17 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
         child: Container(
           color: Colors.blue,
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Row(
               children: [
                 Expanded(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                Icon(    Icons.cloud_outlined),
+                const Icon(    Icons.cloud_outlined),
                       SizedBox(width: screenSize.width / 60),
                 
-                Text('Bulut Eğitim'),
+                const Text('Bulut Eğitim'),
                       SizedBox(width: screenSize.width / 20),
                       
         DropdownButton<String>(
@@ -42,8 +43,8 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
         value: _value,
         items: const <DropdownMenuItem<String>>[
           DropdownMenuItem(
-            child:  Text('Kategoriler'),
-            value: 'Kategoriler',
+            child:  Text('Categories'),
+            value: 'Categories',
           ),
            DropdownMenuItem(
             child:  Text('Amazon Web Services'),
@@ -78,15 +79,101 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                 ),
                       InkWell(
                         onTap: () {},
-                        child: Text(
-                          'Contact Us',
+                        child: const Text(
+                          "Contact Us",
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
                       SizedBox(width: screenSize.width / 20),
                 InkWell(
-                  onTap: () {},
-                  child: Text(
+                  onTap: () {showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    content: Stack(
+                      clipBehavior: Clip.antiAlias,
+                      children: <Widget>[
+                        Positioned(
+                          right: -40.0,
+                          top: -40.0,
+                          child: InkResponse(
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const CircleAvatar(
+                              child: Icon(Icons.close),
+                              backgroundColor: Colors.red,
+                            ),
+                          ),
+                        ),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Padding(padding: const EdgeInsets.all(8.0),
+                              child:TextFormField(
+                  
+                  keyboardType: TextInputType.name,
+                  decoration: const InputDecoration(  
+                    prefixIcon: Icon(Icons.person),
+        
+                    hintText: 'Tam Ad'
+                  ),
+                   onChanged: (value) {
+                    setState(() {
+                      _name = value.trim();
+                    });
+                  },
+                ),),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(  
+                  hintText: 'Email',prefixIcon: Icon(Icons.mail)
+                ),
+                 onChanged: (value) {
+                  setState(() {
+                    _email = value.trim();
+                  });
+                },),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(hintText: 'Şifre', prefixIcon: Icon(Icons.lock)),
+                  
+                  onChanged: (value) {
+                    setState(() {
+                      _password = value.trim();
+                    });
+                  },),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: 
+              FloatingActionButton(
+                heroTag: "login",
+                backgroundColor: Colors.amber,
+                child: const Text('Giriş Yap',
+                textAlign: TextAlign.center),
+                onPressed: (){
+                    auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
+                    });
+              }),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                );},
+                  child: const Text(
                     'Sign Up',
                     style: TextStyle(color: Colors.black),
                   ),
@@ -109,7 +196,7 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                             onTap: () {
                               Navigator.of(context).pop();
                             },
-                            child: CircleAvatar(
+                            child: const CircleAvatar(
                               child: Icon(Icons.close),
                               backgroundColor: Colors.red,
                             ),
@@ -121,11 +208,11 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(8.0),
                                 child: TextField(
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(  
-                  hintText: 'Email'
+                  hintText: 'Email',prefixIcon: Icon(Icons.mail)
                 ),
                  onChanged: (value) {
                   setState(() {
@@ -134,7 +221,7 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                 },),
                               ),
                               Padding(
-                                padding: EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
                   obscureText: true,
                   decoration: const InputDecoration(hintText: 'Şifre', prefixIcon: Icon(Icons.lock)),
@@ -155,7 +242,7 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                 textAlign: TextAlign.center),
                 onPressed: (){
                     auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeWebScreen()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
                     });
               }),
                               )
@@ -165,8 +252,10 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                       ],
                     ),
                   );
-                });},
-                  child: Text(
+                }
+                );
+                },
+                  child: const Text(
                     'Login',
                     style: TextStyle(color: Colors.black),
                   ),

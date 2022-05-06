@@ -92,6 +92,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  easy_sidemenu:
+    dependency: "direct dev"
+    description:
+      name: easy_sidemenu
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   fake_async:
     dependency: transitive
     description:
