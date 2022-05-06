@@ -123,9 +123,11 @@ class _WebHomePageState extends State<WebHomePage> {
             items: [
               SideMenuItem(
                 priority: 0,
-                title: 'Dashboard',
+                title: 'Anasayfa',
                 onTap: () {
-                  page.jumpToPage(0);
+                  page.jumpToPage(0); Navigator.pop(context);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
+              
                 },
                 icon: Icon(Icons.home),
                 badgeContent: Text(

@@ -1,3 +1,5 @@
+import 'package:bulutegitim/screens/auth/sign_in_mobile.dart';
+import 'package:bulutegitim/screens/pages/main_home_web.dart';
 import 'package:flutter/material.dart';
 
 class NavDrawer extends StatelessWidget {
@@ -20,7 +22,7 @@ class NavDrawer extends StatelessWidget {
                   Expanded(
                     flex: 6,
                     child: Text(
-                      "Profile",
+                      "Profil",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -32,11 +34,13 @@ class NavDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text("Dashboard"),
+            title: Text("Anasayfa"),
             leading: IconButton(
               icon: Icon(Icons.dashboard_outlined),
               onPressed: () {
                 Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => WebHomePage())); 
               },
             ),
             onTap: ()
@@ -50,7 +54,7 @@ class NavDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: Text("Courses"),
+            title: Text("Kurslar"),
             leading: IconButton(
               icon: Icon(Icons.file_copy_rounded),
               onPressed: () {
@@ -67,7 +71,7 @@ class NavDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: Text("Contact"),
+            title: Text("İletişim"),
             leading: IconButton(
               icon: Icon(Icons.contact_page),
               onPressed: () {
@@ -84,7 +88,7 @@ class NavDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: Text("Notes"),
+            title: Text("Notlar"),
             leading: IconButton(
               icon: Icon(Icons.note),
               onPressed: () {
@@ -101,7 +105,7 @@ class NavDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: Text("Settings"),
+            title: Text("Ayarlar"),
             leading: IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
@@ -118,14 +122,17 @@ class NavDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: Text("Exit"),
+            title: Text("Çıkış"),
             leading: IconButton(
               icon: Icon(Icons.exit_to_app),
-              onPressed: () {
+              onPressed: () { Navigator.pop(context);
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInScreen()));
               },
             ),
-            onTap: ()
-             {
+            onTap: () 
+             async{
+               Navigator.pop(context);
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInScreen()));
               /* Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => contact())); */

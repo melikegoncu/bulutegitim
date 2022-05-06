@@ -1,3 +1,4 @@
+import 'package:bulutegitim/screens/auth/sign_in_mobile.dart';
 import 'package:bulutegitim/screens/home/home_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +16,11 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold( resizeToAvoidBottomInset: false, 
-      appBar: AppBar(title: const Text('Bulut Eğitim'),),
+      appBar: AppBar(title: const Text('Bulut Eğitim'),
+      actions: [
+        IconButton(onPressed: () { Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInScreen()));
+              }, icon: Icon(Icons.exit_to_app))
+      ],),
       body: Container(
   width: double.infinity,
   decoration: const BoxDecoration(

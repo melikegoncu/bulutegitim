@@ -15,7 +15,7 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
     late String  _password, _email, _name;
   final auth = FirebaseAuth.instance;
 
-  String? _value= "Categories";
+  String? _value;
   @override
   Widget build(BuildContext context) {
   var screenSize = MediaQuery.of(context).size;
@@ -32,20 +32,18 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                const Icon(    Icons.cloud_outlined),
+                const Icon(    Icons.cloud_outlined,color: Colors.white),
                       SizedBox(width: screenSize.width / 60),
                 
-                const Text('Bulut Eğitim'),
+                const Text('Bulut Eğitim',
+                style: TextStyle(color: Colors.white)),
                       SizedBox(width: screenSize.width / 20),
                       
         DropdownButton<String>(
-          disabledHint:const Text("Choose an item"),
+          iconEnabledColor: Colors.white,
+          hint:const Text("Kategoriler", style: TextStyle(color: Colors.white)),
         value: _value,
         items: const <DropdownMenuItem<String>>[
-          DropdownMenuItem(
-            child:  Text('Categories'),
-            value: 'Categories',
-          ),
            DropdownMenuItem(
             child:  Text('Amazon Web Services'),
             value: 'AWS',
@@ -80,8 +78,8 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                       InkWell(
                         onTap: () {},
                         child: const Text(
-                          "Contact Us",
-                          style: TextStyle(color: Colors.black),
+                          "İletişim",
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                       SizedBox(width: screenSize.width / 20),
@@ -174,8 +172,8 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                 }
                 );},
                   child: const Text(
-                    'Sign Up',
-                    style: TextStyle(color: Colors.black),
+                    'Kaydol',
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
                 SizedBox(
@@ -240,10 +238,15 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                 backgroundColor: Colors.amber,
                 child: const Text('Giriş Yap',
                 textAlign: TextAlign.center),
-                onPressed: (){
-                    auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
-                    });
+                onPressed: ()async{
+                  // if(auth.currentUser != null) {
+                  //   auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
+                  //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
+                  //   });
+
+                  // }
+                  print(auth.currentUser);
+                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
               }),
                               )
                             ],
@@ -256,8 +259,8 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                 );
                 },
                   child: const Text(
-                    'Login',
-                    style: TextStyle(color: Colors.black),
+                    'Giriş Yap',
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],
@@ -265,43 +268,6 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
           ),
         ),
       ),
-      // AppBar(leading: const Icon(    Icons.cloud_outlined,  ),
-      // title: const Text("Bulut Eğitim"),
-      // actions: <Widget>[
-      //   DropdownButton<String>(
-      //     disabledHint:const Text("Choose an item"),
-      //   value: _value,
-      //   items: const <DropdownMenuItem<String>>[
-      //      DropdownMenuItem(
-      //       child:  Text('Amazon Web Services'),
-      //       value: 'AWS',
-      //     ),
-      //      DropdownMenuItem(
-      //       child:  Text('Microsoft Azure'),
-      //       value: 'MicrosoftAzure',
-      //     ), DropdownMenuItem(
-      //       child:  Text('Google Cloud Platform'),
-      //       value: 'GoogleCloudPlatform',
-      //     ), DropdownMenuItem(
-      //       child: Text('Alibaba Cloud'),
-      //       value: 'AlibabaCloud',
-      //     ), DropdownMenuItem(
-      //       child: Text('Big Data'),
-      //       value: 'BigData',
-      //     ), DropdownMenuItem(
-      //       child: Text('Business Management'),
-      //       value: 'BusinessManagement',
-      //     ), DropdownMenuItem(
-      //       child: Text('Cloud Computing Fundamentals'),
-      //       value: 'CloudComputingFundamentals',
-      //     ),
-      //   ], 
-      //   onChanged: (String? value) {
-      //     setState(() => _value = value);
-      //   },
-      // ),
-      // ],
-      // ),
     );
   }
 }

@@ -35,6 +35,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(  
+                    prefixIcon: Icon(Icons.mail),
                     hintText: 'Email'
                   ),
                    onChanged: (value) {
@@ -46,7 +47,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   obscureText: true,
-                  decoration: const InputDecoration(hintText: 'Şifre'),
+                  decoration: const InputDecoration(prefixIcon: Icon(Icons.lock),
+                    hintText: 'Şifre'),
                   onChanged: (value) {
                     setState(() {
                       _password = value.trim();
