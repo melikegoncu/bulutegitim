@@ -1,6 +1,4 @@
-import 'package:bulutegitim/screens/auth/sign_up_mobile.dart';
 import 'package:bulutegitim/screens/home/home_web.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 
@@ -12,7 +10,7 @@ class WebHomePage extends StatefulWidget {
 }
 
 class _WebHomePageState extends State<WebHomePage> {
-  String? _value= "Kategoriler";
+  String? _value;
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +37,9 @@ class _WebHomePageState extends State<WebHomePage> {
                       SizedBox(width: screenSize.width / 20),
                       
         DropdownButton<String>(
-          disabledHint:const Text("Choose an item"),
+          hint:const Text("Kategoriler"),
         value: _value,
         items: const <DropdownMenuItem<String>>[
-          DropdownMenuItem(
-            child:  Text('Kategoriler'),
-            value: 'Kategoriler',
-          ),
            DropdownMenuItem(
             child:  Text('Amazon Web Services'),
             value: 'AWS',
@@ -80,7 +74,7 @@ class _WebHomePageState extends State<WebHomePage> {
                       InkWell(
                         onTap: () {},
                         child: const Text(
-                          "Contact Us",
+                          "İletişim",
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
@@ -137,7 +131,7 @@ class _WebHomePageState extends State<WebHomePage> {
               ),
               SideMenuItem(
                 priority: 1,
-                title: 'Profile',
+                title: 'Profil',
                 onTap: () {
                   page.jumpToPage(1);
                 },
@@ -145,7 +139,7 @@ class _WebHomePageState extends State<WebHomePage> {
               ),
               SideMenuItem(
                 priority: 2,
-                title: 'Courses',
+                title: 'Kurslar',
                 onTap: () {
                   page.jumpToPage(2);
                 },
@@ -153,7 +147,7 @@ class _WebHomePageState extends State<WebHomePage> {
               ),
               SideMenuItem(
                 priority: 3,
-                title: 'Notes',
+                title: 'Notlar',
                 onTap: () {
                   page.jumpToPage(3);
                 },
@@ -161,7 +155,7 @@ class _WebHomePageState extends State<WebHomePage> {
               ),
               SideMenuItem(
                 priority: 4,
-                title: 'Settings',
+                title: 'Ayarlar',
                 onTap: () {
                   page.jumpToPage(4);
                 },
@@ -169,7 +163,7 @@ class _WebHomePageState extends State<WebHomePage> {
               ),
               SideMenuItem(
                 priority: 6,
-                title: 'Exit',
+                title: 'Çıkış',
                 onTap: () async {Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeWebScreen()));},
                 icon: Icon(Icons.exit_to_app),
               ),
