@@ -11,8 +11,9 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  late String _email, _password;
   final _formKey = GlobalKey<FormState>();
+    final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final auth = FirebaseAuth.instance;
 
   @override
@@ -33,27 +34,20 @@ class _SignInScreenState extends State<SignInScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(  
                     prefixIcon: Icon(Icons.mail),
                     hintText: 'Email'
-                  ),
-                   onChanged: (value) {
-                    setState(() {
-                      _email = value.trim();
-                    });
-                  },),),
+                  ),),),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   obscureText: true,
+                  controller: _passwordController,
                   decoration: const InputDecoration(prefixIcon: Icon(Icons.lock),
                     hintText: 'Şifre'),
-                  onChanged: (value) {
-                    setState(() {
-                      _password = value.trim();
-                    });
-                  },),),
+                  ),),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children:[
@@ -63,9 +57,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: const Text('Giriş Yap',
                   textAlign: TextAlign.center),
                   onPressed: (){
-                      auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
-                      });
+                      auth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
                 }),
                 FloatingActionButton( 
                   heroTag: "signup",

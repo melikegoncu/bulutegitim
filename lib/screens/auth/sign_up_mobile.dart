@@ -1,3 +1,4 @@
+import 'package:bulutegitim/net/firebase.dart';
 import 'package:bulutegitim/screens/auth/sign_in_mobile.dart';
 import 'package:bulutegitim/screens/home/home_mobile.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,10 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-    late String _email, _password, _name;
     final _formKey = GlobalKey<FormState>();
+    final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
       appBar: AppBar(title: const Text('Bulut Eğitim'),
       actions: [
         IconButton(onPressed: () { Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInScreen()));
-              }, icon: Icon(Icons.exit_to_app))
+              }, icon: const Icon(Icons.exit_to_app))
       ],),
       body: Container(
   width: double.infinity,
@@ -35,46 +38,32 @@ class _SignupScreenState extends State<SignupScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  
+                  controller: _usernameController,
                   keyboardType: TextInputType.name,
                   decoration: const InputDecoration(  
                     prefixIcon: Icon(Icons.person),
         
                     hintText: 'Tam Ad'
                   ),
-                   onChanged: (value) {
-                    setState(() {
-                      _name = value.trim();
-                    });
-                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(  
                      prefixIcon: Icon(Icons.mail),
                     hintText: 'Email'
                   ),
-                   onChanged: (value) {
-                    setState(() {
-                      _email = value.trim();
-                    });
-                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   obscureText: true,
+                  controller: _passwordController,
                   decoration: const InputDecoration(hintText: 'Şifre', prefixIcon: Icon(Icons.lock)),
-                  
-                  onChanged: (value) {
-                    setState(() {
-                      _password = value.trim();
-                    });
-                  },
                 ),
                 
               ),
@@ -85,10 +74,12 @@ class _SignupScreenState extends State<SignupScreen> {
                   heroTag: "signup",
                   backgroundColor: Colors.amber,
                   child: const Text('Kaydol'),
-                  onPressed: (){
-                    auth.createUserWithEmailAndPassword(email: _email, password: _password).then((_){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
-                    });
+                  onPressed: ()async{
+                    await auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+                    User updateUser = auth.currentUser!;
+                    updateUser.updateDisplayName(_usernameController.text);
+                    userSetup(_usernameController.text);
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
                   },
                 )
               ])

@@ -1,10 +1,13 @@
 import 'package:bulutegitim/screens/auth/sign_in_mobile.dart';
 import 'package:bulutegitim/screens/pages/main_home_web.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class NavDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final auth = FirebaseAuth.instance;
     return Drawer(
       child:ListView(
         children: [
@@ -131,11 +134,9 @@ class NavDrawer extends StatelessWidget {
             ),
             onTap: () 
              async{
+               await auth.signOut();
                Navigator.pop(context);
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInScreen()));
-              /* Navigator.of(context).pop();
-              Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => contact())); */
               },
           ),
             Divider(

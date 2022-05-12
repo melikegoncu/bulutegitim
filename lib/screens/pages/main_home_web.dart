@@ -1,6 +1,8 @@
 import 'package:bulutegitim/screens/home/home_web.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class WebHomePage extends StatefulWidget {
   const WebHomePage({ Key? key }) : super(key: key);
@@ -14,6 +16,7 @@ class _WebHomePageState extends State<WebHomePage> {
 
   @override
   Widget build(BuildContext context) {
+  final auth = FirebaseAuth.instance;
   var screenSize = MediaQuery.of(context).size;
 
     PageController page = PageController();
@@ -164,7 +167,9 @@ class _WebHomePageState extends State<WebHomePage> {
               SideMenuItem(
                 priority: 6,
                 title: 'Çıkış',
-                onTap: () async {Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeWebScreen()));},
+                onTap: () async {
+                  await auth.signOut();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeWebScreen()));},
                 icon: Icon(Icons.exit_to_app),
               ),
             ],

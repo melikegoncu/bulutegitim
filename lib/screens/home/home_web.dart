@@ -2,6 +2,8 @@ import 'package:bulutegitim/screens/pages/main_home_web.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../net/firebase.dart';
+
 class HomeWebScreen extends StatefulWidget {
   const HomeWebScreen({ Key? key }) : super(key: key);
 
@@ -12,7 +14,9 @@ class HomeWebScreen extends StatefulWidget {
 
 class _HomeWebScreenState extends State<HomeWebScreen> {
   final _formKey = GlobalKey<FormState>();
-    late String  _password, _email, _name;
+      final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final auth = FirebaseAuth.instance;
 
   String? _value;
@@ -111,43 +115,31 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                             children: <Widget>[
                               Padding(padding: const EdgeInsets.all(8.0),
                               child:TextFormField(
-                  
+                                controller: _usernameController,
                   keyboardType: TextInputType.name,
                   decoration: const InputDecoration(  
                     prefixIcon: Icon(Icons.person),
         
                     hintText: 'Tam Ad'
                   ),
-                   onChanged: (value) {
-                    setState(() {
-                      _name = value.trim();
-                    });
-                  },
                 ),),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextField(
+                                child: TextFormField(
+                                  controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(  
                   hintText: 'Email',prefixIcon: Icon(Icons.mail)
                 ),
-                 onChanged: (value) {
-                  setState(() {
-                    _email = value.trim();
-                  });
-                },),
+                  ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
+                                  controller: _passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(hintText: 'Şifre', prefixIcon: Icon(Icons.lock)),
-                  
-                  onChanged: (value) {
-                    setState(() {
-                      _password = value.trim();
-                    });
-                  },),
+                  ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -155,12 +147,14 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
               FloatingActionButton(
                 heroTag: "login",
                 backgroundColor: Colors.amber,
-                child: const Text('Giriş Yap',
+                child: const Text('Kaydol',
                 textAlign: TextAlign.center),
-                onPressed: (){
-                    auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
-                    });
+                onPressed: ()async{
+                  await auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+                  User updateUser = auth.currentUser!;
+                  updateUser.updateDisplayName(_usernameController.text);
+                  userSetup(_usernameController.text);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
               }),
                               )
                             ],
@@ -207,28 +201,21 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextField(
+                                child: TextFormField(
+                                  controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(  
                   hintText: 'Email',prefixIcon: Icon(Icons.mail)
                 ),
-                 onChanged: (value) {
-                  setState(() {
-                    _email = value.trim();
-                  });
-                },),
+                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
+                                  controller: _passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(hintText: 'Şifre', prefixIcon: Icon(Icons.lock)),
-                  
-                  onChanged: (value) {
-                    setState(() {
-                      _password = value.trim();
-                    });
-                  },),
+                  ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -239,14 +226,8 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                 child: const Text('Giriş Yap',
                 textAlign: TextAlign.center),
                 onPressed: ()async{
-                  // if(auth.currentUser != null) {
-                  //   auth.signInWithEmailAndPassword(email: _email, password: _password).then((_){
-                  //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
-                  //   });
-
-                  // }
-                  print(auth.currentUser);
-                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
+                    await auth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
               }),
                               )
                             ],

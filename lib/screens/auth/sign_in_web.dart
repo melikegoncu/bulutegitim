@@ -46,7 +46,7 @@ class _SignInScreenWebState extends State<SignInScreenWeb> {
                   },),),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
+                child: TextFormField(
                   obscureText: true,
                   decoration: const InputDecoration(hintText: 'Şifre'),
                   onChanged: (value) {
