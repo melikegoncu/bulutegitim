@@ -167,6 +167,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.19.3"
+  flutter_switch:
+    dependency: "direct dev"
+    description:
+      name: flutter_switch
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -177,6 +184,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttertoast:
+    dependency: "direct dev"
+    description:
+      name: fluttertoast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.0.9"
   foundation_flutter:
     dependency: "direct dev"
     description:

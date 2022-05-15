@@ -1,6 +1,8 @@
-import 'package:bulutegitim/screens/pages/main_home_web.dart';
+import 'package:bulutegitim/screens/auth/web_entrance.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 
 import '../../net/firebase.dart';
 
@@ -14,11 +16,24 @@ class HomeWebScreen extends StatefulWidget {
 
 class _HomeWebScreenState extends State<HomeWebScreen> {
   final _formKey = GlobalKey<FormState>();
+      String role="Öğrenci";
+    Map<String, String> roles = {'Öğrenci': "student", 'Eğitmen': "instructor"};
+    bool statusRole= true;
       final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final auth = FirebaseAuth.instance;
 
+   switch_role () {
+   setState(() {
+     if(role=="Öğrenci") {
+      role="Eğitmen"; statusRole=false;
+      }
+     else{
+      role="Öğrenci";statusRole=true;
+      } 
+   });
+ } 
   String? _value;
   @override
   Widget build(BuildContext context) {
@@ -115,6 +130,12 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                             children: <Widget>[
                               Padding(padding: const EdgeInsets.all(8.0),
                               child:TextFormField(
+                                validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Lütfen isim giriniz.';
+              }
+              return null;
+            },
                                 controller: _usernameController,
                   keyboardType: TextInputType.name,
                   decoration: const InputDecoration(  
@@ -126,6 +147,15 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
+                                  validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Lütfen mail adresinizi giriniz.';
+              }
+              else if (!value.contains('@') && !value.contains('.com')) {
+                return 'Geçersiz bir mail adresi girdiniz.';
+              }
+              return null;
+            },
                                   controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(  
@@ -136,11 +166,34 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
+                                  validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Lütfen bir şifre belirleyiniz.';
+              }
+              return null;
+            },
                                   controller: _passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(hintText: 'Şifre', prefixIcon: Icon(Icons.lock)),
                   ),
                               ),
+                              Row(
+                children: [
+                  FlutterSwitch(
+			activeText: "Öğrenci",
+			inactiveText: "Eğitmen",
+			value: statusRole,
+			valueFontSize: 16.0,
+			width: 100,
+			height: 50,
+			borderRadius: 30.0,
+			showOnOff: true,
+			onToggle: (val) {
+				switch_role();
+			},
+			),
+                ],
+              ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: 
@@ -150,11 +203,16 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                 child: const Text('Kaydol',
                 textAlign: TextAlign.center),
                 onPressed: ()async{
-                  await auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
-                  User updateUser = auth.currentUser!;
-                  updateUser.updateDisplayName(_usernameController.text);
-                  userSetup(_usernameController.text);
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
+                  if(_formKey.currentState!.validate()){
+                  try {
+                    await auth.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+                    User updateUser = auth.currentUser!;
+                    updateUser.updateDisplayName(_usernameController.text);
+                    userSetup(_usernameController.text,roles[role]);
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebEnterancePage()));
+                    } on FirebaseAuthException catch (error) {
+                    Fluttertoast.showToast(msg: error.message!,gravity: ToastGravity.TOP,);
+                    }}
               }),
                               )
                             ],
@@ -202,6 +260,12 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
+                                  validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Lütfen mail adresinizi giriniz.';
+              }
+              return null;
+            },
                                   controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(  
@@ -212,6 +276,12 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
+                                  validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Lütfen şifrenizi giriniz.';
+              }
+              return null;
+            },
                                   controller: _passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(hintText: 'Şifre', prefixIcon: Icon(Icons.lock)),
@@ -226,13 +296,16 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                 child: const Text('Giriş Yap',
                 textAlign: TextAlign.center),
                 onPressed: ()async{
+                  if(_formKey.currentState!.validate()){
                     await auth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebEnterancePage()));
+                  }
               }),
                               )
                             ],
                           ),
                         ),
+                        
                       ],
                     ),
                   );

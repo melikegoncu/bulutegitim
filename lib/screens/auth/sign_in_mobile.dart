@@ -34,6 +34,15 @@ class _SignInScreenState extends State<SignInScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Lütfen mailinizi giriniz.';
+              }
+              else if (!value.contains('@') && !value.contains('.com')) {
+                return 'Geçersiz bir mail adresi girdiniz.';
+              }
+              return null;
+            },
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(  
@@ -43,6 +52,12 @@ class _SignInScreenState extends State<SignInScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Lütfen şifrenizi giriniz.';
+              }
+              return null;
+            },
                   obscureText: true,
                   controller: _passwordController,
                   decoration: const InputDecoration(prefixIcon: Icon(Icons.lock),
@@ -57,8 +72,10 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: const Text('Giriş Yap',
                   textAlign: TextAlign.center),
                   onPressed: (){
+                    if(_formKey.currentState!.validate()){
                       auth.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Home()));
+                    }
                 }),
                 FloatingActionButton( 
                   heroTag: "signup",

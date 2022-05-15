@@ -4,14 +4,14 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
-class WebHomePage extends StatefulWidget {
-  const WebHomePage({ Key? key }) : super(key: key);
+class WebEnterancePage extends StatefulWidget {
+  const WebEnterancePage({ Key? key }) : super(key: key);
 
   @override
-  State<WebHomePage> createState() => _WebHomePageState();
+  State<WebEnterancePage> createState() => _WebEnterancePageState();
 }
 
-class _WebHomePageState extends State<WebHomePage> {
+class _WebEnterancePageState extends State<WebEnterancePage> {
   String? _value;
 
   @override
@@ -35,10 +35,8 @@ class _WebHomePageState extends State<WebHomePage> {
                     children: [
                 const Icon(    Icons.cloud_outlined),
                       SizedBox(width: screenSize.width / 60),
-                
                 const Text('Bulut Eğitim'),
                       SizedBox(width: screenSize.width / 20),
-                      
         DropdownButton<String>(
           hint:const Text("Kategoriler"),
         value: _value,
@@ -95,7 +93,7 @@ class _WebHomePageState extends State<WebHomePage> {
               displayMode: SideMenuDisplayMode.auto,
               hoverColor: Colors.blue[100],
               selectedColor: Colors.lightBlue,
-              selectedTitleTextStyle: TextStyle(color: Colors.white),
+              selectedTitleTextStyle: const TextStyle(color: Colors.white),
               selectedIconColor: Colors.white,
               // decoration: BoxDecoration(
               //   borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -123,11 +121,11 @@ class _WebHomePageState extends State<WebHomePage> {
                 title: 'Anasayfa',
                 onTap: () {
                   page.jumpToPage(0); Navigator.pop(context);
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebHomePage()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const WebEnterancePage()));
               
                 },
-                icon: Icon(Icons.home),
-                badgeContent: Text(
+                icon: const Icon(Icons.home),
+                badgeContent: const Text(
                   '3',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -138,7 +136,7 @@ class _WebHomePageState extends State<WebHomePage> {
                 onTap: () {
                   page.jumpToPage(1);
                 },
-                icon: Icon(Icons.supervisor_account),
+                icon: const Icon(Icons.supervisor_account),
               ),
               SideMenuItem(
                 priority: 2,
@@ -146,7 +144,7 @@ class _WebHomePageState extends State<WebHomePage> {
                 onTap: () {
                   page.jumpToPage(2);
                 },
-                icon: Icon(Icons.file_copy_rounded),
+                icon: const Icon(Icons.file_copy_rounded),
               ),
               SideMenuItem(
                 priority: 3,
@@ -154,7 +152,7 @@ class _WebHomePageState extends State<WebHomePage> {
                 onTap: () {
                   page.jumpToPage(3);
                 },
-                icon: Icon(Icons.note_add),
+                icon: const Icon(Icons.note_add),
               ),
               SideMenuItem(
                 priority: 4,
@@ -162,7 +160,7 @@ class _WebHomePageState extends State<WebHomePage> {
                 onTap: () {
                   page.jumpToPage(4);
                 },
-                icon: Icon(Icons.settings),
+                icon: const Icon(Icons.settings),
               ),
               SideMenuItem(
                 priority: 6,
@@ -170,7 +168,7 @@ class _WebHomePageState extends State<WebHomePage> {
                 onTap: () async {
                   await auth.signOut();
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeWebScreen()));},
-                icon: Icon(Icons.exit_to_app),
+                icon: const Icon(Icons.exit_to_app),
               ),
             ],
           ),
@@ -182,7 +180,7 @@ class _WebHomePageState extends State<WebHomePage> {
                   color: Colors.white,
                   child: Center(
                     child: Text(
-                      'Dashboard',
+                      'Anasayfa',
                       style: TextStyle(fontSize: 35),
                     ),
                   ),

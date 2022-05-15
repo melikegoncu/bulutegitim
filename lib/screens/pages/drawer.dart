@@ -1,10 +1,12 @@
 import 'package:bulutegitim/screens/auth/sign_in_mobile.dart';
-import 'package:bulutegitim/screens/pages/main_home_web.dart';
+import 'package:bulutegitim/screens/auth/web_entrance.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
 class NavDrawer extends StatelessWidget {
+  const NavDrawer({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final auth = FirebaseAuth.instance;
@@ -37,13 +39,13 @@ class NavDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text("Anasayfa"),
+            title: const Text("Anasayfa"),
             leading: IconButton(
-              icon: Icon(Icons.dashboard_outlined),
+              icon: const Icon(Icons.dashboard_outlined),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => WebHomePage())); 
+                  builder: (BuildContext context) => const WebEnterancePage())); 
               },
             ),
             onTap: ()
@@ -57,9 +59,9 @@ class NavDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: Text("Kurslar"),
+            title: const Text("Kurslar"),
             leading: IconButton(
-              icon: Icon(Icons.file_copy_rounded),
+              icon: const Icon(Icons.file_copy_rounded),
               onPressed: () {
               },
             ),
@@ -74,9 +76,9 @@ class NavDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: Text("İletişim"),
+            title: const Text("İletişim"),
             leading: IconButton(
-              icon: Icon(Icons.contact_page),
+              icon: const Icon(Icons.contact_page),
               onPressed: () {
               },
             ),
@@ -91,9 +93,9 @@ class NavDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: Text("Notlar"),
+            title: const Text("Notlar"),
             leading: IconButton(
-              icon: Icon(Icons.note),
+              icon: const Icon(Icons.note),
               onPressed: () {
               },
             ),
@@ -108,9 +110,9 @@ class NavDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: Text("Ayarlar"),
+            title: const Text("Ayarlar"),
             leading: IconButton(
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.settings),
               onPressed: () {
               },
             ),
