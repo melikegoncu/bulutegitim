@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../pages/drawer.dart';
+import 'mobile_drawer.dart';
 
 class Home extends StatefulWidget {
   const Home({ Key? key }) : super(key: key);
