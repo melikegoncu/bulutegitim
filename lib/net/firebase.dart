@@ -20,7 +20,7 @@ Future<void> userSetup(String displayName, [roles = "student"]) async {
   return;
 }
 
-Future<void> roleUpdate({String? displayName,String? roles}) async {
+Future<void> roleUpdate([String? displayName,String? roles]) async {
     Map<String, dynamic> data = <String, dynamic>{
     'displayName': displayName,
     'roles': roles
@@ -39,4 +39,10 @@ Future<void> deleteItem({
       .delete()
       .whenComplete(() => print('Note item deleted from the database'))
       .catchError((e) => print(e));
+}
+Stream<QuerySnapshot> readItems() {
+  CollectionReference notesItemCollection =
+      _mainCollection.doc(uid).collection('Users');
+
+  return notesItemCollection.snapshots();
 }
