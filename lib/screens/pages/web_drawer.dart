@@ -1,5 +1,5 @@
-import 'package:bulutegitim/screens/auth/sign_in_mobile.dart';
 import 'package:bulutegitim/screens/auth/web_entrance.dart';
+import 'package:bulutegitim/screens/home/home_web.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -131,14 +131,14 @@ class NavWebDrawer extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Icons.exit_to_app),
               onPressed: () { Navigator.pop(context);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInScreen()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeWebScreen()));
               },
             ),
             onTap: () 
              async{
                await auth.signOut();
                Navigator.pop(context);
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInScreen()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomeWebScreen()));
               },
           ),
             Divider(
