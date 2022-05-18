@@ -1,7 +1,10 @@
 import 'package:bulutegitim/screens/auth/sign_in_mobile.dart';
-import 'package:bulutegitim/screens/auth/web_entrance.dart';
+import 'package:bulutegitim/screens/home/home_mobile.dart';
+import 'package:bulutegitim/screens/pages/profile_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'course_upload_mobile.dart';
 
 
 class NavDrawer extends StatelessWidget {
@@ -27,7 +30,7 @@ class NavDrawer extends StatelessWidget {
                   Expanded(
                     flex: 6,
                     child: Text(
-                      "Profil",
+                      "Menu",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -45,14 +48,14 @@ class NavDrawer extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => const WebEnterancePage())); 
+                  builder: (BuildContext context) => const Home())); 
               },
             ),
             onTap: ()
             {
-              /*Navigator.of(context).pop();
+              Navigator.of(context).pop();
                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => MyHomePage())); */
+                  builder: (BuildContext context) => Home())); 
             },
           ),
           Divider(
@@ -67,9 +70,26 @@ class NavDrawer extends StatelessWidget {
             ),
             onTap: ()
             {
-              /*Navigator.of(context).pop();
+              Navigator.of(context).pop();
                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => profile())); */
+                  builder: (BuildContext context) => MobilUploadPage())); 
+            },
+          ),
+          Divider(
+            color: Colors.grey,
+          ),
+          ListTile(
+            title: const Text("Profile"),
+            leading: IconButton(
+              icon: const Icon(Icons.file_copy_rounded),
+              onPressed: () {
+              },
+            ),
+            onTap: ()
+            {
+              Navigator.of(context).pop();
+               Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => ProfileMobile())); 
             },
           ),
           Divider(

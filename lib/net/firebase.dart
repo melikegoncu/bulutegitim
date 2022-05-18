@@ -46,3 +46,8 @@ Stream<QuerySnapshot> readItems() {
 
   return notesItemCollection.snapshots();
 }
+
+Future<Stream<QuerySnapshot>> getUserData() async{
+    var firebaseUser = auth.currentUser!;
+    return await FirebaseFirestore.instance.collection("Users").where("uid"==firebaseUser.uid).snapshots();
+  }

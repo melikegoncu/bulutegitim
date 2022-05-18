@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../pages/course_upload_web.dart';
+
 
 class WebEnterancePage extends StatefulWidget {
   const WebEnterancePage({ Key? key }) : super(key: key);
@@ -184,15 +186,7 @@ class _WebEnterancePageState extends State<WebEnterancePage> {
                     ),
                   ),
                 ),
-                Container(
-                  color: Colors.white,
-                  child: Center(
-                    child: Text(
-                      'Kurslar',
-                      style: TextStyle(fontSize: 35),
-                    ),
-                  ),
-                ),
+                WebUploadPage(),
                 ProfileWeb(),
                 Container(
                   color: Colors.white,

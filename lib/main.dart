@@ -11,7 +11,8 @@ void main() async {
           apiKey: "AIzaSyA5DzQqLkkwt_NFEGN19Mje3k7SLdeZBR8",
           appId: "1:192475888110:web:507de23fc29cf2098bf6ff",
           messagingSenderId: "192475888110",
-          projectId: "bulutegitim-2f12a"));
+          projectId: "bulutegitim-2f12a",
+          storageBucket: "bulutegitim-2f12a.appspot.com"));
   
   runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: HomeWebScreen()));
 }
