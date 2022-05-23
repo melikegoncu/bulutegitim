@@ -5,7 +5,7 @@ final CollectionReference _mainCollection = FirebaseFirestore.instance.collectio
 final FirebaseAuth auth = FirebaseAuth.instance;
   String uid = auth.currentUser!.uid.toString();
     DocumentReference documentReferencer =
-      _mainCollection.doc();
+      _mainCollection.doc(uid);
 
 Future<void> userSetup(String displayName, [roles = "student"]) async {
     Map<String, dynamic> data = <String, dynamic>{

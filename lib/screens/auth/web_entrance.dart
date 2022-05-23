@@ -1,5 +1,6 @@
 import 'package:bulutegitim/net/firebase.dart';
 import 'package:bulutegitim/screens/home/home_web.dart';
+import 'package:bulutegitim/screens/pages/anasayfa_web.dart';
 import 'package:bulutegitim/screens/pages/profile_web.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
@@ -177,15 +178,7 @@ class _WebEnterancePageState extends State<WebEnterancePage> {
             child: PageView(
               controller: page,
               children: [
-                Container(
-                  color: Colors.white,
-                  child: Center(
-                    child: Text(
-                      'Anasayfa',
-                      style: TextStyle(fontSize: 35),
-                    ),
-                  ),
-                ),
+                Anasayfa_web(),
                 WebUploadPage(),
                 ProfileWeb(),
                 Container(
