@@ -23,7 +23,8 @@ void main() async {
           apiKey: "AIzaSyBfmAyBeqUeZp785pMlzMQWutUmavelo4w",
           appId: "1:192475888110:android:3bce6e295c41272f8bf6ff",
           messagingSenderId: "192475888110",
-          projectId: "bulutegitim-2f12a"));
+          projectId: "bulutegitim-2f12a",
+          storageBucket: "bulutegitim-2f12a.appspot.com"));
   
   runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: SignInScreen()));
 }
