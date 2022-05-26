@@ -320,6 +320,14 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
           ),
         ),
       ),
+      body: Container(
+  decoration: BoxDecoration(
+    image: DecorationImage(
+      image: AssetImage('assets/weblogin.png'),
+      fit: BoxFit.cover,
+    ),
+  ),
+),
     );
   }
 }
