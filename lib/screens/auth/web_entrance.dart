@@ -1,5 +1,6 @@
 import 'package:bulutegitim/net/firebase.dart';
 import 'package:bulutegitim/screens/home/home_web.dart';
+import 'package:bulutegitim/screens/pages/admin.dart';
 import 'package:bulutegitim/screens/pages/anasayfa_web.dart';
 import 'package:bulutegitim/screens/pages/profile_web.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +23,17 @@ class _WebEnterancePageState extends State<WebEnterancePage> {
   @override
   Widget build(BuildContext context) {
   final auth = FirebaseAuth.instance;
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  String role;
 
-  //_usernameController.text= readItems();
+  /*                    FutureBuilder(
+                        future: readUser(),
+                        builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot){
+                          if(snapshot.connectionState == ConnectionState.done &&
+                            snapshot.hasData){
+                              return Text(snapshot.data!['roles']);
+                            }
+                          return Container();
+                        }),*/
 
   var screenSize = MediaQuery.of(context).size;
 
@@ -84,6 +90,42 @@ class _WebEnterancePageState extends State<WebEnterancePage> {
                     ],
                   ),
                 ),
+                Container(child: FutureBuilder(
+            //Bu fonksiyon firestore'dan data çekmeyi görebilmek için sonradan eklendi
+            future: getUserData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done)
+                return Text("Loading data...Please wait");
+              return Text("Merhaba $displayName  ");
+            },
+          ),),        
+          FutureBuilder(
+                        future: readUser(),
+                        builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot){
+                          if(snapshot.connectionState == ConnectionState.done &&
+                            snapshot.hasData){
+                              role=snapshot.data!['roles']; 
+                              if(role=="admin") {       
+                              return Row(
+                                children: [
+                                  InkWell(
+                                  onTap: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AdminPage()));},
+                                  child: const Text(
+                                  "Admin",
+                                  style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                                SizedBox(
+                                width: 10,
+                                )],
+                              );}
+                              return SizedBox(width: 5,);
+                            }
+                          return Container();
+                        }), 
+                       
                       InkWell(
                         onTap: () {},
                         child: const Text(
@@ -107,10 +149,6 @@ class _WebEnterancePageState extends State<WebEnterancePage> {
               selectedColor: Colors.lightBlue,
               selectedTitleTextStyle: const TextStyle(color: Colors.white),
               selectedIconColor: Colors.white,
-              // decoration: BoxDecoration(
-              //   borderRadius: BorderRadius.all(Radius.circular(10)),
-              // ),
-              // backgroundColor: Colors.blueGrey[700]
             ),
             title: Column(
               children: [
@@ -179,16 +217,23 @@ class _WebEnterancePageState extends State<WebEnterancePage> {
               controller: page,
               children: [
                 Anasayfa_web(),
-                WebUploadPage(),
+                          FutureBuilder(
+                        future: readUser(),
+                        builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot){
+                          if(snapshot.connectionState == ConnectionState.done &&
+                            snapshot.hasData){
+                              role=snapshot.data!['roles']; 
+                              if(role=="instructor") {       
+                              return WebUploadPage();
+                            }
+                          return Anasayfa_web();
+                        }
+                        else {return Anasayfa_web();}
+                        }), 
                 ProfileWeb(),
                 Container(
                   color: Colors.white,
-                  child: Center(
-                    child: Text(
-                      'Ayarlar',
-                      style: TextStyle(fontSize: 35),
-                    ),
-                  ),
+                  child: Text("Ayarlar"),
                 ),
                 Container(
                   color: Colors.white,
