@@ -2,6 +2,8 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+
+import '../../net/firebase.dart';
 class WebUploadPage extends StatefulWidget {
   const WebUploadPage({Key? key}) : super(key: key);
 
@@ -37,6 +39,8 @@ Future selectFile() async {
     final snapshot =await uploadTask!.whenComplete(() {});
 
     final urlDownload = await snapshot.ref.getDownloadURL();
+    courseSetup(urlDownload);
+
     print('Download Link: $urlDownload');
 
     setState(() {
