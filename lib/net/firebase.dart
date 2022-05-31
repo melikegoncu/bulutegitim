@@ -3,10 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 final CollectionReference _mainCollection = FirebaseFirestore.instance.collection('Users');
 final FirebaseAuth auth = FirebaseAuth.instance;
+final CollectionReference _usercourse = _mainCollection.doc(uid).collection('course');
+
   String uid = auth.currentUser!.uid.toString();
   String displayName = auth.currentUser!.displayName.toString();
     DocumentReference documentReferencer =
       _mainCollection.doc(uid);
+     DocumentReference courseReference =
+      _mainCollection.doc(uid).collection('course').doc();  
 
 Future<void> userSetup(String displayName, [roles = "student"]) async {
     Map<String, dynamic> data = <String, dynamic>{
@@ -15,6 +19,17 @@ Future<void> userSetup(String displayName, [roles = "student"]) async {
     'roles': roles
   };
     await documentReferencer
+      .set(data)
+      .whenComplete(() => print("Notes item added to the database"))
+      .catchError((e) => print(e));
+  return;
+}
+
+Future<void> courseSetup(String courseUrl) async {
+    Map<String, dynamic> data = <String, dynamic>{
+    'courseUrl': courseUrl
+  };
+    await courseReference
       .set(data)
       .whenComplete(() => print("Notes item added to the database"))
       .catchError((e) => print(e));
