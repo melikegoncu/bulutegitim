@@ -1,7 +1,9 @@
+import 'package:bulutegitim/screens/pages/play_course_web.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
+import '../../net/firebase.dart';
 import 'admin_drawer.dart';
 
 class AdminVideos extends StatefulWidget {
@@ -44,7 +46,8 @@ class _AdminVideosState extends State<AdminVideos> {
         ),
       ),
       floatingActionButton: null,
-      body: StreamBuilder(stream: FirebaseFirestore.instance.collection('Users/*/course').snapshots(), 
+      body: StreamBuilder(stream: FirebaseFirestore.instance.collection("Video")
+.where("approval",isEqualTo: "unapproved").snapshots(), 
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator(),);
@@ -53,11 +56,35 @@ class _AdminVideosState extends State<AdminVideos> {
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
           return Card(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.video_file),
                 ListTile(
-                  leading:  Text("Onay Durumu: " + document['approval']),
-                  title: Text("Link: " + document['courseUrl']),
+                  tileColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0.5),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  title: Text("Video İsmi: " + document['videoName']),
+                  leading:  IconButton(
+              icon: Icon(Icons.video_file),
+              onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Player_web(document['url'])));
+              },
+            ),
+                  subtitle:  Text("Eğitimci: " + document['instructorName'],),
+                  trailing:  FloatingActionButton.extended(
+                    heroTag: "approve",
+                    backgroundColor: Colors.amber,
+                    label: Text('Onay',
+                    textAlign: TextAlign.center),
+                    onPressed: ()async{
+                      try {
+                        approve(document.id);
+                      } catch (e) {
+                        
+                      }
+                  }),
+                  isThreeLine: true,
                 ),
               ],
             ),
@@ -66,5 +93,9 @@ class _AdminVideosState extends State<AdminVideos> {
         },),
         drawer: AdminDrawer(),
     );
+  }
+  
+  void approve(String id) {
+    videoApprove("approved",id);
   }
 }

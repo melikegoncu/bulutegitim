@@ -42,23 +42,21 @@ class AdminDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: const Text("Anasayfa"),
+            title: const Text("Videolar"),
             leading: IconButton(
-              icon: const Icon(Icons.dashboard_outlined),
+              icon: const Icon(Icons.video_file),
               onPressed: () {
-                Navigator.of(context).pop();
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => const Anasayfa_web())); 
+                  builder: (BuildContext context) => AdminVideos())); 
               },
             ),
             onTap: ()
-            {
-              Navigator.of(context).pop();
-               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Anasayfa_web())); 
-            },
+             {
+Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => AdminVideos())); 
+              },
           ),
-          Divider(
+            Divider(
             color: Colors.grey,
           ),
           ListTile(
@@ -80,24 +78,7 @@ class AdminDrawer extends StatelessWidget {
             Divider(
             color: Colors.grey,
           ),
-          ListTile(
-            title: const Text("Videolar"),
-            leading: IconButton(
-              icon: const Icon(Icons.video_file),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => AdminVideos())); 
-              },
-            ),
-            onTap: ()
-             {
-Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => AdminVideos())); 
-              },
-          ),
-            Divider(
-            color: Colors.grey,
-          ),
+          
           ListTile(
             title: Text("Çıkış"),
             leading: IconButton(

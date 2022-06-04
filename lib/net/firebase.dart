@@ -68,7 +68,15 @@ Future<void> roleUpdate([String? displayName,String? roles]) async {
       .catchError((e) => print(e));
   return;
 }
-
+Future<void> videoApprove(String approval, String id) async {
+    
+  await _videoCollection
+      .doc(id)
+      .update({'approval': approval})
+      .whenComplete(() => print("approval item updated in the database"))
+      .catchError((e) => print(e));
+  return;
+}
 Future<void> deleteItem({
   required String docId,
 }) async {

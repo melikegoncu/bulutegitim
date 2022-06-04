@@ -1,6 +1,6 @@
 import 'package:bulutegitim/net/firebase.dart';
 import 'package:bulutegitim/screens/home/home_web.dart';
-import 'package:bulutegitim/screens/pages/admin.dart';
+import 'package:bulutegitim/screens/pages/admin_videos.dart';
 import 'package:bulutegitim/screens/pages/anasayfa_web.dart';
 import 'package:bulutegitim/screens/pages/communication.dart';
 import 'package:bulutegitim/screens/pages/profile_web.dart';
@@ -112,7 +112,7 @@ class _WebEnterancePageState extends State<WebEnterancePage> {
                                   InkWell(
                                   onTap: () {
                                   Navigator.of(context).pop();
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AdminPage()));},
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AdminVideos()));},
                                   child: const Text(
                                   "Admin",
                                   style: TextStyle(color: Colors.black),
@@ -182,7 +182,7 @@ class _WebEnterancePageState extends State<WebEnterancePage> {
               ),
               SideMenuItem(
                 priority: 1,
-                title: 'Kurslar',
+                title: 'Kurs Ekle',
                 onTap: () {
                   page.jumpToPage(1);
                 },

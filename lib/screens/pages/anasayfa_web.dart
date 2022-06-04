@@ -1,6 +1,7 @@
 import 'package:bulutegitim/screens/pages/play_course_web.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Anasayfa_web extends StatefulWidget {
   const Anasayfa_web({Key? key}) : super(key: key);
@@ -10,77 +11,61 @@ class Anasayfa_web extends StatefulWidget {
 }
 
 class _Anasayfa_webState extends State<Anasayfa_web> {
-  Future<ListResult> getFirebaseVideo() async {
-    final ref = await FirebaseStorage.instance.ref('courses').listAll();
 
-    ref.items.forEach((refe) {
-      print('Eleman: $refe');
-    });
-    return ref;
-  }
-    
-  Future<String> downloadURL(String videoNames) async {
-    String downloadURL = await FirebaseStorage.instance.ref('courses/$videoNames').getDownloadURL();
-    return downloadURL;
-  }
 ////////////snapshot.data.toString()
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getFirebaseVideo(),
-      builder: (BuildContext context, AsyncSnapshot<ListResult> snapshot){
-        if(snapshot.connectionState == ConnectionState.done &&
-          snapshot.hasData){
-            return Scrollbar(
-              thickness: 10,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount:snapshot.data!.items.length,
-                itemBuilder: (BuildContext context, int index){
-                  return Container(
-                    width: 500,
-                    height: 120,
-                    child: Card(
-                      margin: EdgeInsets.all(15),
-                            elevation: 10,
-                            shape: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                              borderSide: BorderSide.none,
-                            ),
-                      child: Column(
-                        children: [
-                          FutureBuilder(
-                        future: downloadURL(snapshot.data!.items[index].name),
-                        builder: (BuildContext context, AsyncSnapshot<String> snapshot){
-                          if(snapshot.connectionState == ConnectionState.done &&
-                            snapshot.hasData){
-                              return GestureDetector(
-                                onTap: () {
-                                          Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Player_web(snapshot.data.toString()),
-                                          ),
-                                          );
-                                },
-                            child:Image.network(
+    return Scaffold(
+       floatingActionButton: null,
+      body: StreamBuilder(stream: FirebaseFirestore.instance.collection("Video")
+.where("approval",isEqualTo: "approved").snapshots(), 
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator(),);
+        }
+        return ListView(children: snapshot.data!.docs.map((DocumentSnapshot document){
+          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+          return Card(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ListTile(
+                  tileColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0.5),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  title: Text("Video İsmi: " + document['videoName']),
+                  leading:  Image.network(
                               'https://thumbs.dreamstime.com/z/acrylic-illustration-blue-cloud-holding-book-enjoys-reading-book-blue-cloud-holding-book-enjoys-reading-161466410.jpg',
                               fit: BoxFit.fill,
-                            ),);
-                            }
-                          return Container();
-                        }),
-                          Text(snapshot.data!.items[index].name),
-                        ],
-                      ),
-                    ),
-                  );
-                }
+                            ),
+                  subtitle:  Text("Eğitimci: " + document['instructorName'],),
+                  trailing:  FloatingActionButton.extended(
+                    heroTag: "play",
+                    backgroundColor: Colors.amber,
+                    label: Text('İzle',
+                    textAlign: TextAlign.center),
+                    onPressed: ()async{
+                      try {
+                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Player_web(document['url']),
+                                          ),
+                                          );
+                      } catch (e) {
+                        
+                      }
+                  }),
+                  isThreeLine: true,
                 ),
-            );
-          }
-        return Container();
-      });
+              ],
+            ),
+          );
+        }).toList(),);
+        },),
+    );
   }
+
 }
