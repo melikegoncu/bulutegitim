@@ -1,4 +1,5 @@
 import 'package:bulutegitim/screens/auth/web_entrance.dart';
+import 'package:bulutegitim/screens/pages/communication.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -81,7 +82,8 @@ class _HomeWebScreenState extends State<HomeWebScreen> {
                   ),
                 ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Communicate()));},
                         child: const Text(
                           "İletişim",
                           style: TextStyle(color: Colors.white),

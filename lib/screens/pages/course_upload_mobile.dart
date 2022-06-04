@@ -39,7 +39,6 @@ Future selectFile() async {
     final snapshot =await uploadTask!.whenComplete(() {});
 
     final urlDownload = await snapshot.ref.getDownloadURL();
-    courseSetup(urlDownload);
 
     print('Download Link: $urlDownload');
 

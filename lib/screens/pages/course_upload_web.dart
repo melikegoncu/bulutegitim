@@ -26,7 +26,7 @@ Future selectFile() async {
     pickedFile= result.files.first;
   });
 }
-  Future uploadFile() async{
+  Future uploadFile(String videoName, String description, String categories) async{
     try{
     Uint8List? fileBytes = pickedFile!.bytes;
     String? fileName = pickedFile?.name;
@@ -37,9 +37,11 @@ Future selectFile() async {
 });
 
     final snapshot =await uploadTask!.whenComplete(() {});
+     var firebaseUser = auth.currentUser!;
+    String? instructorName= firebaseUser.displayName;
 
     final urlDownload = await snapshot.ref.getDownloadURL();
-    courseSetup(urlDownload);
+    videoSetup(urlDownload, videoName, instructorName!, description, categories);
 
     print('Download Link: $urlDownload');
 
@@ -51,29 +53,138 @@ Future selectFile() async {
       print('error in uploading image for : ${e.toString()}');
     }
   }
+  String? _value;
 
   @override
   Widget build(BuildContext context) {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _videoNameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
     return Center(
       child: Column(
         children: [
-          // if (pickedFile != null)
-          // Expanded(
+          Container(
+            child: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Container(
+                                  child: DropdownButton<String>(
+          hint:const Text("Kategoriler"),
+        value: _value,
+        items: const <DropdownMenuItem<String>>[
+           DropdownMenuItem(
+            child:  Text('Amazon Web Services'),
+            value: 'AWS',
+          ),
+           DropdownMenuItem(
+            child:  Text('Microsoft Azure'),
+            value: 'MicrosoftAzure',
+          ), DropdownMenuItem(
+            child:  Text('Google Cloud Platform'),
+            value: 'GoogleCloudPlatform',
+          ), DropdownMenuItem(
+            child: Text('Alibaba Cloud'),
+            value: 'AlibabaCloud',
+          ), DropdownMenuItem(
+            child: Text('Big Data'),
+            value: 'BigData',
+          ), DropdownMenuItem(
+            child: Text('Business Management'),
+            value: 'BusinessManagement',
+          ), DropdownMenuItem(
+            child: Text('Cloud Computing Fundamentals'),
+            value: 'CloudComputingFundamentals',
+          ),
+        ], 
+        onChanged: (String? value) {
+          setState(() => _value = value);
+        },
+      ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: 
+                  FloatingActionButton.extended(
+                    heroTag: "pick",
+                    backgroundColor: Colors.amber,
+                    label: Text('Seç',
+                    textAlign: TextAlign.center),
+                    onPressed: ()async{
+                      try {
+                        selectFile();
+                      } catch (e) {
+                        
+                      }
+                  }),
+                            
+                                ),
+          //                       Padding(
+          //                         padding: const EdgeInsets.all(8.0),
+          //                         child: (pickedFile != null) ? Expanded(
           //   child: Container(
-          //   child:  Image.memory(pickedFile!.bytes!)
-          // )),
-          SizedBox(height: 10,),
-          const Text("Kurs ekleyin"),
-          SizedBox(height: 10,),
+          //   child:  Text(pickedFile!.name)
+          // )): Container(),
+          //                       ),
 
-          ElevatedButton(onPressed: selectFile, child: const Text("Seç")),
-          SizedBox(height: 10,),
+                                Padding(padding: const EdgeInsets.all(8.0),
+                                child:TextFormField(
+                                  validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Lütfen kurs ismi giriniz.';
+                  }
+                  return null;
+                },
+                      controller: _videoNameController,
+                      keyboardType: TextInputType.name,
+                      decoration: const InputDecoration(  
+                      prefixIcon: Icon(Icons.label),
+                      hintText: 'Video İsmi'
+                      ),
+                    ),),
 
-          ElevatedButton(onPressed: uploadFile, child: const Text("Yükle")),
-          SizedBox(height: 10,),
-
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextFormField(
+                                    validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Lütfen açıklama giriniz.';
+                  }
+                  return null;
+                },
+                    controller: _descriptionController,
+                    keyboardType: TextInputType.name,
+                    decoration: const InputDecoration(  
+                      hintText: 'Açıklama',
+                      prefixIcon: Icon(Icons.description)
+                    ),
+                      ),
+                                ),
+                                
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: 
+                  FloatingActionButton.extended(
+                    heroTag: "upload",
+                    backgroundColor: Colors.amber,
+                    label: Text('Yükle',
+                    textAlign: TextAlign.center),
+                    onPressed: ()async{
+                      if(_formKey.currentState!.validate() && pickedFile != null && _value!=null ){
+                      try {
+                        uploadFile(_videoNameController.text, _descriptionController.text, _value.toString());
+                      } catch (e) {
+                        
+                      }
+                      }
+                  }),
+                                ),
+                              ],
+                            ),
+                          ),
+          ),
           Container(child: buildProgress()),
-
         ],
       ),
     );

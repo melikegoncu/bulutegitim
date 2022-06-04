@@ -2,15 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 final CollectionReference _mainCollection = FirebaseFirestore.instance.collection('Users');
+final CollectionReference _commentCollection = FirebaseFirestore.instance.collection('Comment');
+final CollectionReference _videoCollection = FirebaseFirestore.instance.collection('Video');
 final FirebaseAuth auth = FirebaseAuth.instance;
-final CollectionReference _usercourse = _mainCollection.doc(uid).collection('course');
 
   String uid = auth.currentUser!.uid.toString();
   String displayName = auth.currentUser!.displayName.toString();
     DocumentReference documentReferencer =
       _mainCollection.doc(uid);
-     DocumentReference courseReference =
-      _mainCollection.doc(uid).collection('course').doc();  
+          DocumentReference commentReferencer =
+      _commentCollection.doc();
+          DocumentReference videoReferencer =
+      _videoCollection.doc();
 
 Future<void> userSetup(String displayName, [roles = "student"]) async {
     Map<String, dynamic> data = <String, dynamic>{
@@ -20,21 +23,39 @@ Future<void> userSetup(String displayName, [roles = "student"]) async {
   };
     await documentReferencer
       .set(data)
-      .whenComplete(() => print("Notes item added to the database"))
+      .whenComplete(() => print("User item added to the database"))
+      .catchError((e) => print(e));
+  return;
+}
+Future<void> videoSetup(String url,String videoName, String instructorName, String description, String categories, [approval = "unapproved"]) async {
+    Map<String, dynamic> data = <String, dynamic>{
+    'url': url,
+    'videoName':videoName,
+    'instructorName': instructorName,
+    'uid':uid,
+    'description':description,
+    'categories':categories,
+    'approval':approval
+  };
+    await videoReferencer
+      .set(data)
+      .whenComplete(() => print("Videos item added to the database"))
       .catchError((e) => print(e));
   return;
 }
 
-Future<void> courseSetup(String courseUrl) async {
+Future<void> commentSetup(String mail,String comment) async {
     Map<String, dynamic> data = <String, dynamic>{
-    'courseUrl': courseUrl
+    'mail': mail,
+    'comment':comment
   };
-    await courseReference
+    await commentReferencer
       .set(data)
-      .whenComplete(() => print("Notes item added to the database"))
+      .whenComplete(() => print("Comments item added to the database"))
       .catchError((e) => print(e));
   return;
 }
+
 
 Future<void> roleUpdate([String? displayName,String? roles]) async {
     Map<String, dynamic> data = <String, dynamic>{
@@ -43,7 +64,7 @@ Future<void> roleUpdate([String? displayName,String? roles]) async {
   };
   await documentReferencer
       .update(data)
-      .whenComplete(() => print("Note item updated in the database"))
+      .whenComplete(() => print("Roles item updated in the database"))
       .catchError((e) => print(e));
   return;
 }
@@ -53,7 +74,7 @@ Future<void> deleteItem({
 }) async {
   await documentReferencer
       .delete()
-      .whenComplete(() => print('Note item deleted from the database'))
+      .whenComplete(() => print('User item deleted from the database'))
       .catchError((e) => print(e));
 }
 // Stream<QuerySnapshot> readItems() {

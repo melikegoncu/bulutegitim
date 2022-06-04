@@ -1,4 +1,6 @@
 import 'package:bulutegitim/screens/home/home_web.dart';
+import 'package:bulutegitim/screens/pages/admin_messages.dart';
+import 'package:bulutegitim/screens/pages/admin_videos.dart';
 import 'package:bulutegitim/screens/pages/anasayfa_web.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,34 +62,37 @@ class AdminDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: const Text("İletişim"),
+            title: const Text("Mesajlar"),
             leading: IconButton(
               icon: const Icon(Icons.contact_page),
               onPressed: () {
+                
+               Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => ListComment())); 
               },
             ),
             onTap: ()
              {
-              /* Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => contact())); */
+                  builder: (BuildContext context) => ListComment())); 
               },
           ),
             Divider(
             color: Colors.grey,
           ),
           ListTile(
-            title: const Text("Ayarlar"),
+            title: const Text("Videolar"),
             leading: IconButton(
-              icon: const Icon(Icons.settings),
+              icon: const Icon(Icons.video_file),
               onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => AdminVideos())); 
               },
             ),
             onTap: ()
              {
-              /* Navigator.of(context).pop();
-              Navigator.of(context).pstush(MaterialPageRoute(
-                    builder: (BuildContext context) => contact())); */
+Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => AdminVideos())); 
               },
           ),
             Divider(

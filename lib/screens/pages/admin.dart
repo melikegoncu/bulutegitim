@@ -1,13 +1,7 @@
 import 'package:bulutegitim/screens/pages/admin_drawer.dart';
-import 'package:bulutegitim/screens/pages/profile_web.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../home/home_web.dart';
-import 'anasayfa_web.dart';
-import 'course_upload_web.dart';
-import 'mobile_drawer.dart';
 
 
 
