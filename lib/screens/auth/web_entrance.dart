@@ -2,7 +2,7 @@ import 'package:bulutegitim/net/firebase.dart';
 import 'package:bulutegitim/screens/home/home_web.dart';
 import 'package:bulutegitim/screens/pages/admin_videos.dart';
 import 'package:bulutegitim/screens/pages/anasayfa_web.dart';
-import 'package:bulutegitim/screens/pages/communication.dart';
+import 'package:bulutegitim/screens/pages/communication_web.dart';
 import 'package:bulutegitim/screens/pages/profile_web.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';

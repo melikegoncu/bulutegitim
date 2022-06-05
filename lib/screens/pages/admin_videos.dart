@@ -68,12 +68,12 @@ class _AdminVideosState extends State<AdminVideos> {
                   leading:  IconButton(
               icon: Icon(Icons.video_file),
               onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Player_web(document['url'])));
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Player_web(document['url'])));
               },
             ),
                   subtitle:  Text("Eğitimci: " + document['instructorName'],),
                   trailing:  FloatingActionButton.extended(
-                    heroTag: "approve",
+                    heroTag: "approve$document['url']",
                     backgroundColor: Colors.amber,
                     label: Text('Onay',
                     textAlign: TextAlign.center),

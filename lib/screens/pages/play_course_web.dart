@@ -1,5 +1,8 @@
+import 'package:bulutegitim/screens/pages/anasayfa_web.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
+
+import 'admin_videos.dart';
 
 class Player_web extends StatefulWidget {
   late String urlName;
@@ -34,7 +37,7 @@ class _Player_webState extends State<Player_web> {
         appBar: PreferredSize(
           preferredSize: Size(screenSize.width, 1000),
           child: IconButton(onPressed: () {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
           },
           icon:  const Icon(Icons.arrow_back))),
         body: Center(

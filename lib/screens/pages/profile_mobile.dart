@@ -27,15 +27,14 @@ class _ProfileMobileState extends State<ProfileMobile> {
         ),
         body: Container(
                       color: Colors.white,
-                      child: Center(
-                        child: Form(
-                            key: _formKey,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Padding(padding: const EdgeInsets.all(8.0),
-                                child:TextFormField(
-                                  validator: (value) {
+                      child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Padding(padding: const EdgeInsets.all(8.0),
+                              child:TextFormField(
+                                validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Lütfen isim giriniz.';
                     //return 'Lütfen isim giriniz.' + snapshot.data.toString();
@@ -49,10 +48,10 @@ class _ProfileMobileState extends State<ProfileMobile> {
                       hintText: 'Tam Ad'
                       ),
                     ),),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    validator: (value) {
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Lütfen mail adresinizi giriniz.';
                   }
@@ -67,26 +66,26 @@ class _ProfileMobileState extends State<ProfileMobile> {
                       hintText: 'Email',prefixIcon: Icon(Icons.mail)
                     ),
                       ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                    validator: (value) {
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Lütfen bir şifre belirleyiniz.';
                   }
                   return null;
                 },
-                                    controller: _passwordController,
+                                  controller: _passwordController,
                       obscureText: true,
                       decoration: const InputDecoration(hintText: 'Şifre', prefixIcon: Icon(Icons.lock)),
                       ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: 
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: 
                   FloatingActionButton.extended(
-                    heroTag: "login",
+                    heroTag: "mobileupdate",
                     backgroundColor: Colors.amber,
                     label: Text('Güncelle',
                     textAlign: TextAlign.center),
@@ -102,11 +101,10 @@ class _ProfileMobileState extends State<ProfileMobile> {
                       //Fluttertoast.showToast(msg: error.message!,gravity: ToastGravity.TOP,);
                       }}
                   }),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                      ),
+                        ),
                     ),
         drawer: NavDrawer()
     );

@@ -1,5 +1,7 @@
 import 'package:bulutegitim/screens/auth/sign_in_mobile.dart';
 import 'package:bulutegitim/screens/home/home_mobile.dart';
+import 'package:bulutegitim/screens/pages/communication_mobile.dart';
+import 'package:bulutegitim/screens/pages/communication_web.dart';
 import 'package:bulutegitim/screens/pages/profile_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -83,6 +85,9 @@ class NavDrawer extends StatelessWidget {
             leading: IconButton(
               icon: const Icon(Icons.file_copy_rounded),
               onPressed: () {
+                              Navigator.of(context).pop();
+               Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => ProfileMobile()));
               },
             ),
             onTap: ()
@@ -100,13 +105,16 @@ class NavDrawer extends StatelessWidget {
             leading: IconButton(
               icon: const Icon(Icons.contact_page),
               onPressed: () {
+                Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => Communicate_mobile())); 
               },
             ),
             onTap: ()
              {
-              /* Navigator.of(context).pop();
+               Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => contact())); */
+                    builder: (BuildContext context) => Communicate_mobile())); 
               },
           ),
             Divider(

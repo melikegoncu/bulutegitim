@@ -11,12 +11,10 @@ class Anasayfa_web extends StatefulWidget {
 }
 
 class _Anasayfa_webState extends State<Anasayfa_web> {
-
-////////////snapshot.data.toString()
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       floatingActionButton: null,
+      floatingActionButton: null,
       body: StreamBuilder(stream: FirebaseFirestore.instance.collection("Video")
 .where("approval",isEqualTo: "approved").snapshots(), 
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -41,23 +39,17 @@ class _Anasayfa_webState extends State<Anasayfa_web> {
                               fit: BoxFit.fill,
                             ),
                   subtitle:  Text("Eğitimci: " + document['instructorName'],),
-                  trailing:  FloatingActionButton.extended(
-                    heroTag: "play",
-                    backgroundColor: Colors.amber,
-                    label: Text('İzle',
-                    textAlign: TextAlign.center),
-                    onPressed: ()async{
-                      try {
-                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Player_web(document['url']),
-                                          ),
-                                          );
-                      } catch (e) {
-                        
-                      }
-                  }),
+                  trailing:  IconButton(
+              icon: const Icon(Icons.play_circle_filled_rounded),
+              onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                              builder: (context) => Player_web(document['url']),
+                              ),
+                            );
+              },
+            ),
                   isThreeLine: true,
                 ),
               ],

@@ -1,7 +1,7 @@
 import 'package:bulutegitim/screens/pages/play_course_mobile.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 import '../pages/mobile_drawer.dart';
 
@@ -13,22 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final auth = FirebaseAuth.instance;
   String? _value;
-    Future<ListResult> getFirebaseVideo() async {
-    final ref = await FirebaseStorage.instance.ref('courses').listAll();
-
-    ref.items.forEach((refe) {
-      print('Eleman: $refe');
-    });
-    return ref;
-  }
-    
-  Future<String> downloadURL(String videoNames) async {
-    String downloadURL = await FirebaseStorage.instance.ref('courses/$videoNames').getDownloadURL();
-    return downloadURL;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,62 +58,65 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
-        body: FutureBuilder(
-      future: getFirebaseVideo(),
-      builder: (BuildContext context, AsyncSnapshot<ListResult> snapshot){
-        if(snapshot.connectionState == ConnectionState.done &&
-          snapshot.hasData){
-            return Scrollbar(
-              thickness: 10,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount:snapshot.data!.items.length,
-                itemBuilder: (BuildContext context, int index){
-                  return Container(
-                    width: 100,
-                    height: 50,
-                    child: Card(
-                      margin: EdgeInsets.all(15),
-                            elevation: 10,
-                            shape: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
-                              borderSide: BorderSide.none,
-                            ),
-                      child: Column(
-                        children: [
-                          FutureBuilder(
-                        future: downloadURL(snapshot.data!.items[index].name),
-                        builder: (BuildContext context, AsyncSnapshot<String> snapshot){
-                          if(snapshot.connectionState == ConnectionState.done &&
-                            snapshot.hasData){
-                              return GestureDetector(
-                                onTap: () {
-                                          Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Player_mobile(snapshot.data.toString()),
-                                          ),
-                                          );
-                                },
-                            child:Image.network(
+      body: StreamBuilder(stream: FirebaseFirestore.instance.collection("Video")
+.where("approval",isEqualTo: "approved").snapshots(), 
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator(),);
+        }
+        return ListView(children: snapshot.data!.docs.map((DocumentSnapshot document){
+          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+          return Card(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ListTile(
+                  tileColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(0.5),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  title: Text("Video İsmi: " + document['videoName']),
+                  leading:  Image.network(
                               'https://thumbs.dreamstime.com/z/acrylic-illustration-blue-cloud-holding-book-enjoys-reading-book-blue-cloud-holding-book-enjoys-reading-161466410.jpg',
                               fit: BoxFit.fill,
-                            ),);
-                            }
-                          return Container();
-                        }),
-                          Text(snapshot.data!.items[index].name),
-                        ],
-                      ),
-                    ),
-                  );
-                }
+                            ),
+                  subtitle:  Text("Eğitimci: " + document['instructorName'],),
+                  trailing:  IconButton(
+              icon: const Icon(Icons.play_circle_filled_rounded),
+              onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                              builder: (context) => Player_mobile(document['url']),
+                              ),
+                            );
+              },
+            ),
+                  // trailing:  FloatingActionButton.extended(
+                  //   heroTag: "mobileplay",
+                  //   backgroundColor: Colors.amber,
+                  //   label: Text('İzle',
+                  //   textAlign: TextAlign.center),
+                  //   onPressed: ()async{
+                  //     try {
+                  //       Navigator.push(
+                  //                         context,
+                  //                         MaterialPageRoute(
+                  //                           builder: (context) => Player_mobile(document['url']),
+                  //                         ),
+                  //                         );
+                  //     } catch (e) {
+                        
+                  //     }
+                  // }),
+                  isThreeLine: true,
                 ),
-            );
-          }
-        return Container();
-      }),
+              ],
+            ),
+          );
+        }).toList(),);
+        },),
         drawer: NavDrawer()
     );
   }
