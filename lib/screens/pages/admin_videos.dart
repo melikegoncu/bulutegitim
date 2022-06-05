@@ -72,18 +72,12 @@ class _AdminVideosState extends State<AdminVideos> {
               },
             ),
                   subtitle:  Text("Eğitimci: " + document['instructorName'],),
-                  trailing:  FloatingActionButton.extended(
-                    heroTag: "approve$document['url']",
-                    backgroundColor: Colors.amber,
-                    label: Text('Onay',
-                    textAlign: TextAlign.center),
-                    onPressed: ()async{
-                      try {
-                        approve(document.id);
-                      } catch (e) {
-                        
-                      }
-                  }),
+                  trailing:  IconButton(
+              icon: Icon(Icons.recommend_rounded ),
+              onPressed: () {
+              approve(document.id)
+;              },
+            ),
                   isThreeLine: true,
                 ),
               ],
