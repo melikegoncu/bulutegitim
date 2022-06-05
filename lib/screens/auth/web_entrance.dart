@@ -198,14 +198,6 @@ class _WebEnterancePageState extends State<WebEnterancePage> {
               ),
               SideMenuItem(
                 priority: 3,
-                title: 'Ayarlar',
-                onTap: () {
-                  page.jumpToPage(3);
-                },
-                icon: const Icon(Icons.settings),
-              ),
-              SideMenuItem(
-                priority: 4,
                 title: 'Çıkış',
                 onTap: () async {
                   await auth.signOut();
@@ -233,10 +225,6 @@ class _WebEnterancePageState extends State<WebEnterancePage> {
                         else {return Anasayfa_web();}
                         }), 
                 ProfileWeb(),
-                Container(
-                  color: Colors.white,
-                  child: Text("Ayarlar"),
-                ),
                 Container(
                   color: Colors.white,
                   child: Center(
