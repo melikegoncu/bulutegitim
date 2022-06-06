@@ -64,7 +64,7 @@ class NavDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           ListTile(
-            title: const Text("Kurslar"),
+            title: const Text("Kurs Ekle"),
             leading: IconButton(
               icon: const Icon(Icons.file_copy_rounded),
               onPressed: () {
@@ -115,40 +115,6 @@ class NavDrawer extends StatelessWidget {
                Navigator.of(context).pop();
               Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context) => Communicate_mobile())); 
-              },
-          ),
-            Divider(
-            color: Colors.grey,
-          ),
-          ListTile(
-            title: const Text("Notlar"),
-            leading: IconButton(
-              icon: const Icon(Icons.note),
-              onPressed: () {
-              },
-            ),
-            onTap: ()
-             {
-              /* Navigator.of(context).pop();
-              Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => contact())); */
-              },
-          ),
-            Divider(
-            color: Colors.grey,
-          ),
-          ListTile(
-            title: const Text("Ayarlar"),
-            leading: IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-              },
-            ),
-            onTap: ()
-             {
-              /* Navigator.of(context).pop();
-              Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => contact())); */
               },
           ),
             Divider(
