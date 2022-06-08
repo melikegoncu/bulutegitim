@@ -8,7 +8,7 @@ void main() async {
     WidgetsFlutterBinding.ensureInitialized();
     if (kIsWeb) {  await Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: "AIzaSyA5DzQqLkkwt_NFEGN19Mje3k7SLdeZBR8",
+          apiKey: "api_key_here",
           appId: "1:192475888110:web:507de23fc29cf2098bf6ff",
           messagingSenderId: "192475888110",
           projectId: "bulutegitim-2f12a",
@@ -20,7 +20,7 @@ void main() async {
  else {
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: "AIzaSyBfmAyBeqUeZp785pMlzMQWutUmavelo4w",
+          apiKey: "api_key_here",
           appId: "1:192475888110:android:3bce6e295c41272f8bf6ff",
           messagingSenderId: "192475888110",
           projectId: "bulutegitim-2f12a",
